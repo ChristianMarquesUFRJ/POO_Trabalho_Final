@@ -20,12 +20,22 @@ public class Video extends Recurso{
     }
 
     //////////////////////////////////
+    // validaURLRecurso
+    //////////////////////////////////
+    @Override
+    public boolean validaURLRecurso(String str){
+        String extensao = str.substring(str.length() - 4);
+        System.out.println(extensao);
+        return true;
+    }
+
+    //////////////////////////////////
     // frame_rate
     //////////////////////////////////
-    public int getFrame_rate() {
+    public int getFrameRate() {
         return frame_rate;
     }
-    public void setFrame_rate(int frame_rate) {
+    public void setFrameRate(int frame_rate) {
         this.frame_rate = frame_rate;
     }
     //////////////////////////////////

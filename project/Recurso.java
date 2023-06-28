@@ -20,17 +20,29 @@ public abstract class Recurso {
     public Recurso() {
         this.ID = Recurso.prox_ID++;
     }
+    public Recurso(String _url_recurso) {
+        this();
+        // System.out.println("CONTRUTOR DE RECURSO COM URL");
+        try{
+            this.setUrlRecuso(_url_recurso);
+        }
+        catch (Exception e){
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
 
     //////////////////////////////////
     // recurso
     //////////////////////////////////
-    public boolean validaURLRecurso(String str){
+    public boolean validaURLRecurso(String str) throws Exception{
+        // System.out.println("VALIDA RECURSO EM RECURSO");
         return true;
     }
-    public String getUrl_recurso() {
+    public String getUrlRecurso() {
         return url_recurso;
     }
-    public void setUrl_recurso(String url_recurso) {
+    public void setUrlRecuso(String url_recurso) throws Exception {
+        // System.out.println("URL RECURSO");
         this.url_recurso = url_recurso;
     }
 
