@@ -14,6 +14,9 @@ package project;
 /////////////////////////////////////////////////////////////////////////////
 
 public class Main {
+    /////////////////////////////////////////////////////////////
+    // RECURSO
+    /////////////////////////////////////////////////////////////
     public static void testeContadorRecursos() throws Exception{
         String erro_msgs[] = {"Contagem de ID invalida!"};
         System.out.println("[Teste de contador de recursos]");
@@ -38,6 +41,9 @@ public class Main {
             throw new Exception(erro_msgs[0]);
     }
 
+    /////////////////////////////////////////////////////////////
+    // FOTO
+    /////////////////////////////////////////////////////////////
     public static void testeExtensaoFoto() throws Exception{
         String erro_msgs[] = {
             "Extensao que deveria estar valida, esta dando erro!",
@@ -91,6 +97,9 @@ public class Main {
         }
     }
 
+    /////////////////////////////////////////////////////////////
+    // VIDEO
+    /////////////////////////////////////////////////////////////
     public static void testeExtensaoVideo() throws Exception{
         String erro_msgs[] = {
             "Extensao que deveria estar valida, esta dando erro!",
@@ -143,7 +152,62 @@ public class Main {
             System.out.println("[Criando um video invalido] Houve um erro: " + e.getMessage());
         }
     }
+
+    /////////////////////////////////////////////////////////////
+    // COMENTARIO
+    /////////////////////////////////////////////////////////////
+    public static void testeCriacaoComentario() throws Exception{
+        String erro_msgs[] = {
+            "Comentario que deveria estar valido, esta dando erro!",
+            "Comentario que deveria estar dando erro, esta valido!"
+        };
+        System.out.println("[Teste de criacao de comentario]");
+        
+        // Valido
+        try {
+            Comentario comentario_valido = new Comentario("Muito bom!");
+            System.out.println("[Criando um comentario valido] " + comentario_valido);
+        } catch (Exception e) {
+            throw new Exception(erro_msgs[0] + e.getMessage());
+        }
+        // Invalido por estar vazio
+        try {
+            Comentario comentario_invalido = new Comentario("");
+            throw new Exception(erro_msgs[1]);
+        } catch (Exception e) {
+            System.out.println("[Criando um comentario invalido] Houve um erro: " + e.getMessage());
+        }
+    }
+
+    public static void testeFixacaoComentario() throws Exception{
+        String erro_msgs[] = {
+            "Comentario que comecou nao fixado, permanece nao fixado apos mandar ele ser fixo!",
+            "Comentario que comecou fixado, permanece fixado apos mandar ele ser nao fixo!"
+        };
+        System.out.println("[Teste de fixacao de comentario]");
+        Comentario comentario_nao_fixado = new Comentario("Comentario inicialmente nao fixado", false);
+        Comentario comentario_fixado = new Comentario("Comentario inicialmente fixado", true);
+
+        // Passando comentario inicialmente nao fixado para fixado
+        comentario_nao_fixado.setFixado(true);
+        System.out.println("[Fixando comentario] " + comentario_nao_fixado);
+        if (!comentario_nao_fixado.isFixado())
+            throw new Exception(erro_msgs[0]);
+
+        // Passando comentario inicialmente fixado para nao fixado
+        comentario_fixado.setFixado(false);
+        System.out.println("[Desfixando comentario] " + comentario_fixado);
+        if (comentario_fixado.isFixado())
+            throw new Exception(erro_msgs[1]);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////// MAIN /////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) {
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////// TESTES UNITARIOS DE FUNCIONAMENTO /////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         System.out.println("\n[TESTES UNITARIOS]");
 
         //////////////////////////////////////
@@ -205,7 +269,37 @@ public class Main {
         catch (Exception e){
             System.out.println("[X] Nao passou no teste da verificacao da duracao de videos porque: " + e.getMessage());
         }
+        
+        //////////////////////////////////////
+        // TESTE CRIACAO COMENTARIO
+        //////////////////////////////////////
+        System.out.println("");
+        try{
+            Main.testeCriacaoComentario();
+            System.out.println("[OK] Passou no teste da criacao do comentarios");
+        }
+        catch (Exception e){
+            System.out.println("[X] Nao passou no teste da criacao do comentarios porque: " + e.getMessage());
+        }
+        
+        //////////////////////////////////////
+        // TESTE FIXAR COMENTARIO
+        //////////////////////////////////////
+        System.out.println("");
+        try{
+            Main.testeFixacaoComentario();
+            System.out.println("[OK] Passou no teste de fixacao de comentarios");
+        }
+        catch (Exception e){
+            System.out.println("[X] Nao passou no teste de fixacao de comentarios porque: " + e.getMessage());
+        }
 
         System.out.println("\n");
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////// TESTES GERAIS /////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // System.out.println("\n[TESTES GERAIS]");
+        // System.out.println("\n");
     }
 }
