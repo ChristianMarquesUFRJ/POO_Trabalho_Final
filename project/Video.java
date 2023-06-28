@@ -17,15 +17,30 @@ public class Video extends Recurso{
     // Construtores
     //////////////////////////////////
     public Video() {
+        this.novoRecursoValidado();
     }
     public Video(String url_recurso) throws Exception{
         // System.out.println("CONTRUTOR DE FOTO COM URL");
-        this.setUrlRecurso(url_recurso);
+        try {
+            this.setUrlRecurso(url_recurso);
+        } catch (Exception e) {
+            throw new Exception("O video pode ser criado. " + e.getMessage());
+        }
+        this.novoRecursoValidado();
     }
-    public Video(String url_recurso, String resolucao) throws Exception{
+    public Video(String url_recurso, int duracao) throws Exception{
         // System.out.println("CONTRUTOR DE FOTO COM URL E RESOLUCAO");
-        this.setUrlRecurso(url_recurso);
-        this.setDuracao(duracao);
+        try {
+            this.setUrlRecurso(url_recurso);
+        } catch (Exception e) {
+            throw new Exception("O video nao pode ser criado. " + e.getMessage());
+        }
+        try {
+            this.setDuracao(duracao);
+        } catch (Exception e) {
+            throw new Exception("O video nao pode ser criado. " + e.getMessage());
+        }
+        this.novoRecursoValidado();
     }
 
     //////////////////////////////////
@@ -43,7 +58,11 @@ public class Video extends Recurso{
     public int getDuracao() {
         return duracao;
     }
-    public void setDuracao(int duracao) {
+    public void setDuracao(int duracao) throws Exception {
+        if (duracao < 0)
+            throw new Exception("Duracao nao pode ser negativa!");
+        else if (duracao == 0)
+            throw new Exception("Duracao igual a zero nao eh valido!");
         this.duracao = duracao;
     }
 

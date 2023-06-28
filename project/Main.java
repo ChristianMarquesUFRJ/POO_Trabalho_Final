@@ -57,7 +57,7 @@ public class Main {
             Foto foto_invalida = new Foto("foto_pipoca.txt");
             throw new Exception(erro_msgs[1]);
         } catch (Exception e) {
-            System.out.println(">>> Houve um erro: " + e.getMessage());
+            System.out.println("[Criando uma foto invalida] Houve um erro: " + e.getMessage());
         }
     }
 
@@ -80,14 +80,67 @@ public class Main {
             Foto foto_invalida_numero = new Foto("foto_pipoca.png", "dez PPI");
             throw new Exception(erro_msgs[1]);
         } catch (Exception e) {
-            System.out.println(">>> Houve um erro: " + e.getMessage());
+            System.out.println("[Criando uma foto invalida] Houve um erro: " + e.getMessage());
         }
         // Invalida pela unidade
         try {
             Foto foto_invalida_unidade = new Foto("foto_pipoca.png", "10 PX");
             throw new Exception(erro_msgs[1]);
         } catch (Exception e) {
-            System.out.println(">>> Houve um erro: " + e.getMessage());
+            System.out.println("[Criando uma foto invalida] Houve um erro: " + e.getMessage());
+        }
+    }
+
+    public static void testeExtensaoVideo() throws Exception{
+        String erro_msgs[] = {
+            "Extensao que deveria estar valida, esta dando erro!",
+            "Extensao que deveria estar dando erro, esta valida!"
+        };
+        System.out.println("[Teste de extensao de video]");
+
+        // Valida
+        try {
+            Video video_valido = new Video("video_pipoca.mp4");
+            System.out.println("[Criando um video valido] " + video_valido);
+        } catch (Exception e) {
+            throw new Exception(erro_msgs[0] + e.getMessage());
+        }
+        // Invalida
+        try {
+            Video video_invalido = new Video("video_pipoca.png");
+            throw new Exception(erro_msgs[1]);
+        } catch (Exception e) {
+            System.out.println("[Criando um video invalido] Houve um erro: " + e.getMessage());
+        }
+    }
+
+    public static void testeDuracao() throws Exception{
+        String erro_msgs[] = {
+            "Duracao que deveria estar valida, esta dando erro!",
+            "Duracao que deveria estar dando erro, esta valida!"
+        };
+        System.out.println("[Teste de duracao de video]");
+        
+        // Valida
+        try {
+            Video video_valido = new Video("video_pipoca.mp4", 50);
+            System.out.println("[Criando um video valido] " + video_valido);
+        } catch (Exception e) {
+            throw new Exception(erro_msgs[0] + e.getMessage());
+        }
+        // Invalido por ser negativo
+        try {
+            Video video_invalido = new Video("video_pipoca.mp4", -50);
+            throw new Exception(erro_msgs[1]);
+        } catch (Exception e) {
+            System.out.println("[Criando um video invalido] Houve um erro: " + e.getMessage());
+        }
+        // Invalida pela duracao ser igual a zero
+        try {
+            Video video_invalido = new Video("video_pipoca.mp4", 0);
+            throw new Exception(erro_msgs[1]);
+        } catch (Exception e) {
+            System.out.println("[Criando um video invalido] Houve um erro: " + e.getMessage());
         }
     }
     public static void main(String[] args) {
@@ -128,5 +181,31 @@ public class Main {
         catch (Exception e){
             System.out.println("[X] Nao passou no teste da verificacao da resolucao de fotos porque: " + e.getMessage());
         }
+
+        //////////////////////////////////////
+        // TESTE EXTENSAO DE VIDEO
+        //////////////////////////////////////
+        System.out.println("");
+        try{
+            Main.testeExtensaoVideo();
+            System.out.println("[OK] Passou no teste da verificacao das extensoes de videos");
+        }
+        catch (Exception e){
+            System.out.println("[X] Nao passou no teste da verificacao das extensoes de videos porque: " + e.getMessage());
+        }
+
+        //////////////////////////////////////
+        // TESTE DURACAO DE VIDEO
+        //////////////////////////////////////
+        System.out.println("");
+        try{
+            Main.testeDuracao();
+            System.out.println("[OK] Passou no teste da verificacao da duracao de videos");
+        }
+        catch (Exception e){
+            System.out.println("[X] Nao passou no teste da verificacao da duracao de videos porque: " + e.getMessage());
+        }
+
+        System.out.println("\n");
     }
 }

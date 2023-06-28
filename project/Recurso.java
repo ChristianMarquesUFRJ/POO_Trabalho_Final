@@ -18,7 +18,6 @@ public abstract class Recurso {
     // Construtores
     //////////////////////////////////
     public Recurso() {
-        this.ID = Recurso.prox_ID++;
     }
     public Recurso(String url_recurso) throws Exception {
         // System.out.println("CONTRUTOR DE RECURSO COM URL");
@@ -28,7 +27,6 @@ public abstract class Recurso {
         catch (Exception e){
             throw new Exception("O recurso nao pode ser criado!" + e.getMessage());
         }
-        this.ID = Recurso.prox_ID++;
     }
 
     //////////////////////////////////
@@ -52,4 +50,9 @@ public abstract class Recurso {
     public int getID() {
         return ID;
     }
+    // Criada
+    protected void novoRecursoValidado(){
+        this.ID = Recurso.prox_ID++;
+    }
+
 }

@@ -16,6 +16,7 @@ public class Foto extends Recurso{
     // Construtores
     //////////////////////////////////
     public Foto() {
+        this.novoRecursoValidado();
     }
     public Foto(String url_recurso) throws Exception{
         // System.out.println("CONTRUTOR DE FOTO COM URL");
@@ -24,15 +25,21 @@ public class Foto extends Recurso{
         } catch (Exception e) {
             throw new Exception("A foto nao pode ser criada. " + e.getMessage());
         }
+        this.novoRecursoValidado();
     }
     public Foto(String url_recurso, String resolucao) throws Exception{
         // System.out.println("CONTRUTOR DE FOTO COM URL E RESOLUCAO");
-        this(url_recurso);
+        try {
+            this.setUrlRecurso(url_recurso);
+        } catch (Exception e) {
+            throw new Exception("A foto nao pode ser criada. " + e.getMessage());
+        }
         try {
             this.setResolucao(resolucao);
         } catch (Exception e) {
             throw new Exception("A foto nao pode ser criada. " + e.getMessage());
         }
+        this.novoRecursoValidado();
     }
 
     //////////////////////////////////
@@ -65,6 +72,10 @@ public class Foto extends Recurso{
         return false;
     }
 
+
+    //////////////////////////////////
+    // validaResolucao - Criada
+    //////////////////////////////////
     public void validaResolucao(String resolucao) throws Exception{
         // System.out.println("VALIDA RESOLUCAO EM FOTO");
         String resolucao_unidade = "";
