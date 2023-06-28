@@ -20,10 +20,10 @@ public abstract class Recurso {
     public Recurso() {
         this.ID = Recurso.prox_ID++;
     }
-    public Recurso(String _url_recurso) throws Exception {
+    public Recurso(String url_recurso) throws Exception {
         // System.out.println("CONTRUTOR DE RECURSO COM URL");
         try{
-            this.setUrlRecurso(_url_recurso);
+            this.setUrlRecurso(url_recurso);
         }
         catch (Exception e){
             throw new Exception("O recurso nao pode ser criado!" + e.getMessage());

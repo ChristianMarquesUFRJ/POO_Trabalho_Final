@@ -18,15 +18,14 @@ public class Video extends Recurso{
     //////////////////////////////////
     public Video() {
     }
-
-    //////////////////////////////////
-    // validaURLRecurso
-    //////////////////////////////////
-    @Override
-    public boolean validaURLRecurso(String str){
-        String extensao = str.substring(str.length() - 4);
-        System.out.println(extensao);
-        return true;
+    public Video(String url_recurso) throws Exception{
+        // System.out.println("CONTRUTOR DE FOTO COM URL");
+        this.setUrlRecurso(url_recurso);
+    }
+    public Video(String url_recurso, String resolucao) throws Exception{
+        // System.out.println("CONTRUTOR DE FOTO COM URL E RESOLUCAO");
+        this.setUrlRecurso(url_recurso);
+        this.setDuracao(duracao);
     }
 
     //////////////////////////////////
@@ -46,5 +45,38 @@ public class Video extends Recurso{
     }
     public void setDuracao(int duracao) {
         this.duracao = duracao;
+    }
+
+    //////////////////////////////////
+    // validaURLRecurso
+    //////////////////////////////////
+    @Override
+    public boolean validaURLRecurso(String str){
+        // System.out.println("VALIDA RECURSO EM VIDEO");
+        String extensao = str.substring(str.length() - 4);
+        // Garante que letras maiusculas nao vao atrapalhar na comparacao
+        extensao = new String(extensao.toLowerCase());
+        if ((extensao.equals(".mp4")) || (extensao.equals(".mov")) || (extensao.equals(".wmv")))
+            return true;
+        return false;
+    }
+
+    //////////////////////////////////
+    // setUrlRecurso
+    //////////////////////////////////
+    @Override
+    public void setUrlRecurso(String url_recurso) throws Exception {
+        // System.out.println("SET URL VIDEO");
+        if (!this.validaURLRecurso(url_recurso))
+            throw new Exception("O video '" + url_recurso + "' nao pode ser criado porque a extensao nao eh valida!");
+        this.url_recurso = url_recurso;
+    }
+
+    //////////////////////////////////
+    // toString()
+    //////////////////////////////////
+    @Override
+    public String toString(){
+        return "Video: ID=" + this.getID() + " | Duracao: " + this.getDuracao() + " | URL: " + this.getUrlRecurso();
     }
 }
