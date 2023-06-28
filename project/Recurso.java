@@ -20,15 +20,15 @@ public abstract class Recurso {
     public Recurso() {
         this.ID = Recurso.prox_ID++;
     }
-    public Recurso(String _url_recurso) {
-        this();
+    public Recurso(String _url_recurso) throws Exception {
         // System.out.println("CONTRUTOR DE RECURSO COM URL");
         try{
-            this.setUrlRecuso(_url_recurso);
+            this.setUrlRecurso(_url_recurso);
         }
         catch (Exception e){
-            System.out.println("Erro: " + e.getMessage());
+            throw new Exception("O recurso nao pode ser criado!" + e.getMessage());
         }
+        this.ID = Recurso.prox_ID++;
     }
 
     //////////////////////////////////
@@ -41,8 +41,8 @@ public abstract class Recurso {
     public String getUrlRecurso() {
         return url_recurso;
     }
-    public void setUrlRecuso(String url_recurso) throws Exception {
-        // System.out.println("URL RECURSO");
+    public void setUrlRecurso(String url_recurso) throws Exception {
+        // System.out.println("SET URL RECURSO");
         this.url_recurso = url_recurso;
     }
 

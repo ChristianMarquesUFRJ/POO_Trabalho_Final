@@ -19,10 +19,22 @@ public class Foto extends Recurso{
     }
     public Foto(String _url_recurso) throws Exception{
         // System.out.println("CONTRUTOR DE FOTO COM URL");
-        if (!this.validaURLRecurso(_url_recurso))
-            throw new Exception("A foto nao pode ser criada porque a extensao nao eh valida!");
-        else
-            this.setUrlRecuso(_url_recurso);
+        this.setUrlRecurso(_url_recurso);
+    }
+    public Foto(String _url_recurso, String _resolucao) throws Exception{
+        // System.out.println("CONTRUTOR DE FOTO COM URL E RESOLUCAO");
+        this.setUrlRecurso(_url_recurso);
+        this.setResolucao(_resolucao);
+    }
+
+    //////////////////////////////////
+    // resolucao
+    //////////////////////////////////
+    public String getResolucao() {
+        return resolucao;
+    }
+    public void setResolucao(String resolucao) {
+        this.resolucao = resolucao;
     }
 
     //////////////////////////////////
@@ -40,12 +52,21 @@ public class Foto extends Recurso{
     }
 
     //////////////////////////////////
-    // resolucao
+    // setUrlRecurso
     //////////////////////////////////
-    public String getResolucao() {
-        return resolucao;
+    @Override
+    public void setUrlRecurso(String url_recurso) throws Exception {
+        // System.out.println("SET URL FOTO");
+        if (!this.validaURLRecurso(url_recurso))
+            throw new Exception("A foto '" + url_recurso + "' nao pode ser criada porque a extensao nao eh valida!");
+        this.url_recurso = url_recurso;
     }
-    public void setResolucao(String resolucao) {
-        this.resolucao = resolucao;
+
+    //////////////////////////////////
+    // toString()
+    //////////////////////////////////
+    @Override
+    public String toString(){
+        return "Foto: ID=" + this.getID() + " | Resolucao: " + this.getResolucao() + " | URL: " + this.getUrlRecurso();
     }
 }
