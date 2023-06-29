@@ -98,4 +98,22 @@ public class Video extends Recurso{
     public String toString(){
         return "Video: ID=" + this.getID() + " | Duracao: " + this.getDuracao() + " | URL: " + this.getUrlRecurso();
     }
+
+    //////////////////////////////////
+    // equals()
+    //////////////////////////////////
+    @Override
+    public boolean equals(Object obj){
+        // Se nao forem da mesma classe
+        if (obj.getClass() != Video.class)
+            return false;
+        Video video = (Video) obj;
+        // Se a resolucao for diferente
+        if (this.getDuracao() != video.getDuracao())
+            return false;
+        // Se a URL for diferente
+        if (!this.getUrlRecurso().equals(video.getUrlRecurso()))
+            return false;
+        return true;
+    }
 }

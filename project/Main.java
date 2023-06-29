@@ -251,14 +251,16 @@ public class Main {
         String erro_msgs[] = {
             "Adicao da foto na lista eh invalido por ter passado um endereco invalido!",
             "Controle da quantidade de fotos esta invalida!",
-            "O indice acessado do vetor de teste de comentarios esta invalido! "
+            "O indice acessado do vetor de teste de comentarios esta invalido! ",
+            "Na tentativa de inserir um comentario invalido nao houve problema!"
         };
         String comentarios_str[] = {
             "Comentario 1",
             "Comentario 2",
             "Comentario 3",
             "Comentario 4",
-            "Comentario 5"
+            "Comentario 5",
+            ""
         };
         System.out.println("[Teste de comentar em fotos]");
 
@@ -267,7 +269,7 @@ public class Main {
         postagem.adicionaFoto(foto_valida);
 
         // Adicao valida
-        for (int i = 0; i < comentarios_str.length; i++){
+        for (int i = 0; i < comentarios_str.length-1; i++){
             // Validacao de adicao de comentario
             if (!postagem.comenta(comentarios_str[i]))
                 throw new Exception(erro_msgs[0]);
@@ -282,8 +284,13 @@ public class Main {
                 throw new Exception(erro_msgs[2] + e.getMessage());
             }
         }
-        System.out.print("[PostFoto valida]  ");
-        System.out.println(postagem);
+        System.out.println("[PostFoto valida]  " + postagem);
+
+        // Adicao invalida
+        System.out.println("[Comentario invalido] '" + comentarios_str[comentarios_str.length-1] + "'");
+        if (postagem.comenta(comentarios_str[comentarios_str.length-1]))
+            throw new Exception(erro_msgs[3]);
+        System.out.println("[PostFoto invalida]  " + postagem);
     } 
    
     public static void testeExcluiFoto() throws Exception {
@@ -320,6 +327,93 @@ public class Main {
         System.out.println(postagem);
     } 
 
+
+    /////////////////////////////////////////////////////////////
+    // POST VIDEO
+    /////////////////////////////////////////////////////////////
+    public static void testeAdicionaVideo() throws Exception {
+        String erro_msgs[] = {
+            "Nao foi possivel inserir o video!",
+            "A foto adicionada possui elementos diferente dos enviados!",
+            "Nao houve erro ao adicionar uma foto invalida!"
+        };
+        System.out.println("[Teste de adicionar video]");
+
+        // Adicao valida
+        Video []videos_validos = {
+            new Video("pipoca.mp4", 500),
+            new Video("pipoca.wmv", 800)};
+        PostVideo postagem_valida = new PostVideo();
+        for (int i=0; i < videos_validos.length; i++){
+            // Erro de adicao do video
+            if (!postagem_valida.adicionaVideo(videos_validos[i]))
+                throw new Exception(erro_msgs[0]);
+            Video video_obj_valido = postagem_valida.getVideo();
+            // Erro na comparacao de elementos dos videos (URL e duracao)
+            if (!video_obj_valido.equals(videos_validos[i]))
+                throw new Exception(erro_msgs[1]);
+            // Visualizacao dos dados validos
+            System.out.println("[Video valido " + (i+1) + "] " + videos_validos[i]);
+        }
+        System.out.println("[PostVideo valido]  " + postagem_valida);
+
+        // Adicao invalida
+        Video video_invalido = (Video) null;
+        PostVideo postagem_invalida = new PostVideo();
+        // Nao deu erro de adicao do video
+        if (postagem_invalida.adicionaVideo(video_invalido))
+            throw new Exception(erro_msgs[2]);
+        // Visualizacao dos dados invalidos
+        System.out.print("[Video invalido] ");
+        System.out.println(video_invalido);
+        System.out.print("[PostVideo invalido]");
+        System.out.println(postagem_invalida);
+    }
+   
+    public static void testeComentaVideo() throws Exception {
+        String erro_msgs[] = {
+            "Houve um problema adicionando o comentario valido!",
+            "Controle da quantidade de comentarios esta invalido!",
+            "O indice acessado do vetor de teste de comentarios esta invalido! ",
+            "Na tentativa de inserir um comentario invalido nao houve problema!"
+        };
+        String comentarios_str[] = {
+            "Comentario 1",
+            "Comentario 2",
+            "Comentario 3",
+            "Comentario 4",
+            "Comentario 5",
+            ""
+        };
+        System.out.println("[Teste de comentar em fotos]");
+
+        PostVideo postagem = new PostVideo();
+        postagem.adicionaVideo(new Video("pipoca.mp4", 100));
+
+        // Adicao valida
+        for (int i = 0; i < comentarios_str.length-1; i++){
+            // Validacao de adicao de comentario
+            if (!postagem.comenta(comentarios_str[i]))
+                throw new Exception(erro_msgs[0]);
+            // Validacao da quantidade inserida
+            if (postagem.getQtdeComentarios() != i+1)
+                throw new Exception(erro_msgs[1]);
+            // Visualizacao dos dados individuais validos
+            System.out.print("[Comentario valido] ");
+            try {
+                System.out.println(postagem.getComentarios(i));
+            } catch (Exception e) {
+                throw new Exception(erro_msgs[2] + e.getMessage());
+            }
+        }
+        System.out.println("[PostVideo valido]  " + postagem);
+
+        // Adicao invalida
+        System.out.println("[Comentario invalido] '" + comentarios_str[comentarios_str.length-1] + "'");
+        if (postagem.comenta(comentarios_str[comentarios_str.length-1]))
+            throw new Exception(erro_msgs[3]);
+        System.out.println("[PostVideo invalido]  " + postagem);
+    } 
 
 
 
@@ -452,6 +546,31 @@ public class Main {
         catch (Exception e){
             System.out.println("[X] Nao passou no teste de exclusao de fotos porque: " + e.getMessage());
         }
+        
+        //////////////////////////////////////
+        // TESTE ADICIONA VIDEO
+        //////////////////////////////////////
+        System.out.println("");
+        try{
+            Main.testeAdicionaVideo();
+            System.out.println("[OK] Passou no teste de adicao de video");
+        }
+        catch (Exception e){
+            System.out.println("[X] Nao passou no teste de adicao de video porque: " + e.getMessage());
+        }
+        
+        //////////////////////////////////////
+        // TESTE COMENTA VIDEO
+        //////////////////////////////////////
+        System.out.println("");
+        try{
+            Main.testeComentaVideo();
+            System.out.println("[OK] Passou no teste de comentario em video");
+        }
+        catch (Exception e){
+            System.out.println("[X] Nao passou no teste de comentario em video porque: " + e.getMessage());
+        }
+           
 
 
 

@@ -94,7 +94,6 @@ public class PostFoto implements Postavel{
     ///////////////////////////////
     // comenta
     ///////////////////////////////
-    @Override
     public boolean comenta(String comentario_str){
         // System.out.println("COMENTA FOTO: " + comentario_str);
         Comentario comentario;
@@ -114,11 +113,14 @@ public class PostFoto implements Postavel{
     ///////////////////////////////
     // posta
     ///////////////////////////////
-    @Override
     public boolean posta() {
         if ((this.getQtdeFotos() == 0) || (this.getQtdeFotos() > 10))
             return false;
         this.setDataPostagem();
+        System.out.println(">>> POSTAGEM DE FOTO(S)");
+        System.out.println("-------------------------------------------------------");
+        System.out.println(this.toString());
+        System.out.println("-------------------------------------------------------");
         return true;
     }
 
