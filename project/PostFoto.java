@@ -131,7 +131,7 @@ public class PostFoto implements Postavel{
 
         // Lista de Fotos
         mensagem += "\tFotos: \n";
-        if (this.fotos != null)
+        if (!this.fotos.isEmpty())
             for (Foto foto : this.fotos)
                 mensagem += "\t\t\t\t\t\t" + foto + "\n";
         else
@@ -139,7 +139,8 @@ public class PostFoto implements Postavel{
 
         // Lista de Comentarios
         mensagem += "\t\t\t\t\tComentarios: \n";
-        if (this.listaComentarios != null)
+        // System.out.println(">>>> " + this.listaComentarios);
+        if (!this.listaComentarios.isEmpty())
             for (Comentario comentario : this.listaComentarios)
                 mensagem += "\t\t\t\t\t\t" + comentario + "\n";
         else
