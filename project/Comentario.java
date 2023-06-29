@@ -10,6 +10,7 @@
 package project;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Comentario {
     private LocalDateTime data;
@@ -27,7 +28,7 @@ public class Comentario {
         catch (Exception e){
             throw new Exception("O comentario '" + texto + "' nao pode ser criado. " + e.getMessage());
         }
-        this.setDataComentario();
+        setDataComentario();
         this.setTamanho();
     }
     public Comentario(String texto, boolean fixado) throws Exception{
@@ -38,8 +39,9 @@ public class Comentario {
     /////////////////////////////////////
     // data
     /////////////////////////////////////
-    public LocalDateTime getData() {
-        return data;
+    public String getData() {
+        DateTimeFormatter padrao_formatacao = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        return padrao_formatacao.format(this.data);
     }
     private void setDataComentario() {
         this.data = LocalDateTime.now();
@@ -84,6 +86,6 @@ public class Comentario {
     /////////////////////////////////////
     @Override
     public String toString(){
-        return "Comentario " + (this.isFixado()?"":"nao") + " fixado: Data: " + this.getData() + " | Caracteres: " + this.getTamanho() + " |  Texto: '" + this.getTexto() + "'";
+        return "Comentario " + (this.isFixado()?"":"nao") + " fixado | Data: " + this.getData() + " | Caracteres: " + this.getTamanho() + " |  Texto: '" + this.getTexto() + "'";
     }
 }

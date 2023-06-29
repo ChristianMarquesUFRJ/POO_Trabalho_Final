@@ -111,4 +111,22 @@ public class Foto extends Recurso{
     public String toString(){
         return "Foto: ID=" + this.getID() + " | Resolucao: " + this.getResolucao() + " | URL: " + this.getUrlRecurso();
     }
+
+    //////////////////////////////////
+    // equals()
+    //////////////////////////////////
+    @Override
+    public boolean equals(Object obj){
+        // Se nao forem da mesma classe
+        if (obj.getClass() != Foto.class)
+            return false;
+        Foto foto = (Foto) obj;
+        // Se a resolucao for diferente
+        if (!this.getResolucao().equals(foto.getResolucao()))
+            return false;
+        // Se a URL for diferente
+        if (!this.getUrlRecurso().equals(foto.getUrlRecurso()))
+            return false;
+        return true;
+    }
 }

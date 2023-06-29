@@ -8,6 +8,7 @@
  */
 
 package project;
-public class Postavel {
-    
+public interface Postavel {
+    public abstract boolean posta();
+    public abstract boolean comenta(String comentario_str);
 }

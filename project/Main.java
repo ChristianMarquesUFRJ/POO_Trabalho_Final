@@ -201,6 +201,129 @@ public class Main {
             throw new Exception(erro_msgs[1]);
     }
 
+    /////////////////////////////////////////////////////////////
+    // POST FOTO
+    /////////////////////////////////////////////////////////////
+    public static void testeAdicionaFoto() throws Exception {
+        String erro_msgs[] = {
+            "Adicao da foto na lista eh invalido por ter passado um endereco invalido!",
+            "Controle da quantidade de fotos esta invalida!",
+            "A foto adicionada possui elementos diferente dos enviados!",
+            "Nao houve erro ao adicionar uma foto invalida!"
+        };
+        System.out.println("[Teste de adicionar fotos]");
+
+        // Adicao valida
+        Foto []foto_valida = {
+            new Foto("pipoca.png", "300 PPI"),
+            new Foto("pipoca.png", "600 PPI")};
+        PostFoto postagem_valida = new PostFoto();
+        for (int i=0; i < foto_valida.length; i++){
+            // Erro de adicao da foto na lista
+            if (!postagem_valida.adicionaFoto(foto_valida[i]))
+                throw new Exception(erro_msgs[0]);
+            // Erro no quantitativo de fotos
+            if (postagem_valida.getQtdeFotos() != i+1)
+                throw new Exception(erro_msgs[1]);
+            Foto foto_obj_valia = postagem_valida.getFotoLista(i);
+            // Erro na comparacao de elementos das fotos (URL e resolucao)
+            if (!foto_obj_valia.equals(foto_valida[i]))
+                throw new Exception(erro_msgs[2]);
+            // Visualizacao dos dados validos
+            System.out.println("[Foto valida " + (i+1) + "] " + foto_valida[i]);
+        }
+        System.out.println("[PostFoto valida]  " + postagem_valida);
+
+        // Adicao invalida
+        Foto foto_invalida = (Foto) null;
+        PostFoto postagem_invalida = new PostFoto();
+        // Nao deu erro de adicao da foto na lista
+        if (postagem_invalida.adicionaFoto(foto_invalida))
+            throw new Exception(erro_msgs[3]);
+        // Visualizacao dos dados invalidos
+        System.out.print("[Foto invalida] ");
+        System.out.println(foto_invalida);
+        System.out.print("[PostFoto invalida]");
+        System.out.println(postagem_invalida);
+    }
+   
+    public static void testeComentaFoto() throws Exception {
+        String erro_msgs[] = {
+            "Adicao da foto na lista eh invalido por ter passado um endereco invalido!",
+            "Controle da quantidade de fotos esta invalida!",
+            "O indice acessado do vetor de teste de comentarios esta invalido! "
+        };
+        String comentarios_str[] = {
+            "Comentario 1",
+            "Comentario 2",
+            "Comentario 3",
+            "Comentario 4",
+            "Comentario 5"
+        };
+        System.out.println("[Teste de comentar em fotos]");
+
+        Foto foto_valida = new Foto("pipoca.png", "300 PPI");
+        PostFoto postagem = new PostFoto();
+        postagem.adicionaFoto(foto_valida);
+
+        // Adicao valida
+        for (int i = 0; i < comentarios_str.length; i++){
+            // Validacao de adicao de comentario
+            if (!postagem.comenta(comentarios_str[i]))
+                throw new Exception(erro_msgs[0]);
+            // Validacao da quantidade inserida
+            if (postagem.getQtdeComentarios() != i+1)
+                throw new Exception(erro_msgs[1]);
+            // Visualizacao dos dados individuais validos
+            System.out.print("[Comentario valido] ");
+            try {
+                System.out.println(postagem.getComentarios(i));
+            } catch (Exception e) {
+                throw new Exception(erro_msgs[2] + e.getMessage());
+            }
+        }
+        System.out.print("[PostFoto valida]  ");
+        System.out.println(postagem);
+    } 
+   
+    public static void testeExcluiFoto() throws Exception {
+        String erro_msgs[] = {
+            "Nao conseguiu excluir uma foto que deveria poder excluir: ",
+            "Conseguiu excluir uma foto que nao existia na postagem: "
+        };
+        System.out.println("[Teste de excluir fotos]");
+
+        Foto []fotos = {
+            new Foto("pipoca.png", "300 PPI"),
+            new Foto("pipoca.png", "600 PPI"),
+            new Foto("pipoca.png", "900 PPI")};
+            PostFoto postagem = new PostFoto();
+        for (int i=0; i < fotos.length; i++){
+            postagem.adicionaFoto(fotos[i]);
+            System.out.println("[Foto " + (i+1) + " adicionada] " + fotos[i]);
+        }
+            
+        // Exclusao valida
+        if (!postagem.excluiFoto(fotos[1]))
+            throw new Exception(erro_msgs[0] + fotos[1]);
+        System.out.println("[PostFoto valida]  " + postagem);
+
+        // Exclusao invalida (que nao foi incluida na postagem)
+        Foto foto_invalida = new Foto("pipoca.png", "10 PPI");
+        // Nao deu erro de exclusao da foto na lista
+        if (postagem.excluiFoto(foto_invalida))
+            throw new Exception(erro_msgs[1] + foto_invalida);
+        // Visualizacao dos dados invalidos
+        System.out.print("[Foto invalida] ");
+        System.out.println(foto_invalida);
+        System.out.print("[PostFoto invalida]");
+        System.out.println(postagem);
+    } 
+
+
+
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////// MAIN /////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -208,7 +331,7 @@ public class Main {
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////////////// TESTES UNITARIOS DE FUNCIONAMENTO /////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        System.out.println("\n[TESTES UNITARIOS]");
+        System.out.println("[TESTES UNITARIOS]");
 
         //////////////////////////////////////
         // TESTE CONTADOR DE RECURSOS
@@ -293,6 +416,44 @@ public class Main {
         catch (Exception e){
             System.out.println("[X] Nao passou no teste de fixacao de comentarios porque: " + e.getMessage());
         }
+        
+        //////////////////////////////////////
+        // TESTE ADICIONA FOTO
+        //////////////////////////////////////
+        System.out.println("");
+        try{
+            Main.testeAdicionaFoto();
+            System.out.println("[OK] Passou no teste de adicao de fotos");
+        }
+        catch (Exception e){
+            System.out.println("[X] Nao passou no teste de adicao de fotos porque: " + e.getMessage());
+        }
+        
+        //////////////////////////////////////
+        // TESTE COMENTA FOTO
+        //////////////////////////////////////
+        System.out.println("");
+        try{
+            Main.testeComentaFoto();
+            System.out.println("[OK] Passou no teste de comentario em fotos");
+        }
+        catch (Exception e){
+            System.out.println("[X] Nao passou no teste de comentario em fotos porque: " + e.getMessage());
+        }
+        
+        //////////////////////////////////////
+        // TESTE EXCLUI FOTO
+        //////////////////////////////////////
+        System.out.println("");
+        try{
+            Main.testeExcluiFoto();
+            System.out.println("[OK] Passou no teste de exclusao de fotos");
+        }
+        catch (Exception e){
+            System.out.println("[X] Nao passou no teste de exclusao de fotos porque: " + e.getMessage());
+        }
+
+
 
         System.out.println("\n");
 
@@ -302,4 +463,5 @@ public class Main {
         // System.out.println("\n[TESTES GERAIS]");
         // System.out.println("\n");
     }
+
 }
