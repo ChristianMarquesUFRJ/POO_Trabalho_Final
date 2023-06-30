@@ -117,9 +117,9 @@ public class PostFoto implements Postavel{
         if ((this.getQtdeFotos() == 0) || (this.getQtdeFotos() > 10))
             return false;
         this.setDataPostagem();
-        System.out.println(">>> POSTAGEM DE FOTO(S)");
+        System.out.println(">>> POSTAGEM DE FOTO(S) [" + this.getDataPostagem() + "]");
         System.out.println("-------------------------------------------------------");
-        System.out.println(this.toString());
+        System.out.println("\t\t\t\t" + this.toString());
         System.out.println("-------------------------------------------------------");
         return true;
     }

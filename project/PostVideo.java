@@ -89,9 +89,9 @@ public class PostVideo implements Postavel{
         if (this.video == null)
             return false;
         this.setDataPostagem();
-        System.out.println(">>> POSTAGEM DE VIDEO");
+        System.out.println(">>> POSTAGEM DE VIDEO [" + this.getDataPostagem() + "]");
         System.out.println("-------------------------------------------------------");
-        System.out.println(this.toString());
+        System.out.println("\t\t\t\t\t" + this.toString());
         System.out.println("-------------------------------------------------------");
         return true;
     }

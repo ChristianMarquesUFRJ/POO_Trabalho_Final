@@ -416,6 +416,127 @@ public class Main {
     } 
 
 
+    /////////////////////////////////////////////////////////////
+    // POST FACTORY
+    /////////////////////////////////////////////////////////////
+    public static void testeCriacaoPostFactory() throws Exception {
+        String erro_msgs[] = {
+            "Houve um problema criando o PostVideo pelo postFactory! Nao retornou PostVideo quando deveria!",
+            "Houve um problema criando o PostFoto pelo postFactory! Nao retornou PostFoto quando deveria!",
+            "Ha um problema no postFactory! Deveria ter dado erro ao mandar um tipo invalido!"
+        };
+
+        // Postagem valida de PostVideo
+        Postavel postagem_video = PostavelFactory.getPostavel("POSTVIDEO");
+        if (postagem_video.getClass() != PostVideo.class)
+            throw new Exception(erro_msgs[0]);
+        System.out.println("[PostVideo] " + postagem_video);
+        // Postagem valida de PostFoto
+        Postavel postagem_foto = PostavelFactory.getPostavel("POSTFOTO");
+        if (postagem_foto.getClass() != PostFoto.class)
+            throw new Exception(erro_msgs[1]);
+        System.out.println("[PostFoto] " + postagem_foto);
+
+        // Postagem invalida
+        try {
+            Postavel postagem_invalida = PostavelFactory.getPostavel("POSTTEXTO");
+            throw new Exception(erro_msgs[2]);
+        } catch (Exception e) {
+            System.out.println("[Criando um tipo invalido] Houve um erro: " + e.getMessage());
+        }
+    }
+
+
+
+    /////////////////////////////////////////////////////////////
+    // TESTES - MAIN
+    /////////////////////////////////////////////////////////////
+    public static void testePostFoto() throws Exception {
+        String erro_msgs[] = {
+            "Houve um problema, pois nao deveria ser possivel realizar uma postagem sem foto!",
+            "Houve um problema, pois nao deveria ter problema em adicionar varias fotos na postagem de foto (entre 1 e 10)!",
+            "Houve um problema, pois nao deveria ter problema em postar varias fotos (entre 1 e 10)!",
+            "Houve um problema, pois nao deveria ser possivel postar acima de 10 fotos!"
+        };
+            
+        Foto []fotos = {
+            new Foto("viagem1.png", "960 DPI"),
+            new Foto("viagem2.png", "960 DPI"),
+            new Foto("viagem3.png", "960 DPI"),
+            new Foto("viagem4.png", "960 DPI"),
+            new Foto("viagem5.png", "960 DPI"),
+            new Foto("viagem6.png", "960 DPI"),
+            new Foto("viagem7.png", "960 DPI"),
+            new Foto("viagem8.png", "960 DPI"),
+            new Foto("viagem9.png", "960 DPI"),
+            new Foto("viagem10.png", "960 DPI"),
+            new Foto("viagem11.png", "960 DPI")
+        };
+
+        /////////////////////////////////
+        // TESTE DE POSTAGEM SEM FOTO
+        /////////////////////////////////
+        PostFoto postagem_sem_foto = new PostFoto();
+        if (!postagem_sem_foto.posta())
+            System.out.println("[Tentativa de postagem sem foto] Erro: Nao eh possivel");
+        else
+            throw new Exception(erro_msgs[0]);
+
+        /////////////////////////////////
+        // TESTE DE POSTAGEM COM 5 FOTOS
+        /////////////////////////////////
+        System.out.println("\n[Postagem de 5 fotos]");
+        PostFoto postagem_5_fotos = new PostFoto();
+        postagem_5_fotos.comenta("Muito legal!");
+        for (int i=0; i < 5; i++){
+            if (!postagem_5_fotos.adicionaFoto(fotos[i]))
+                throw new Exception(erro_msgs[1]);
+        }
+        if (!postagem_5_fotos.posta())
+            throw new Exception(erro_msgs[2]);
+
+
+        /////////////////////////////////
+        // TESTE DE POSTAGEM COM 11 FOTOS
+        /////////////////////////////////
+        System.out.print("\n[Tentativa de postagem de 11 fotos] ");
+        PostFoto postagem_11_fotos = new PostFoto();
+        for (int i=0; i < 11; i++){
+            if (!postagem_11_fotos.adicionaFoto(fotos[i]))
+                throw new Exception(erro_msgs[1]);
+        }
+        
+        if (!postagem_11_fotos.posta())
+            System.out.println("Erro: Nao eh possivel");
+        else
+            throw new Exception(erro_msgs[3]);
+    }
+    public static void testePostVideo() throws Exception {
+        String erro_msgs[] = {
+            "Houve um problema, pois nao deveria ser possivel realizar uma postagem sem video!",
+            "Houve um problema, pois nao deveria ter problema em postar tendo um video!"
+        };
+            
+        Video video = new Video("viagem.mp4", 500);
+
+        /////////////////////////////////
+        // TESTE DE POSTAGEM SEM VIDEO
+        /////////////////////////////////
+        PostVideo postagem_sem_video = new PostVideo();
+        if (!postagem_sem_video.posta())
+            System.out.println("[Tentativa de postagem sem video] Erro: Nao eh possivel");
+        else
+            throw new Exception(erro_msgs[0]);
+
+        /////////////////////////////////
+        // TESTE DE POSTAGEM COM VIDEO
+        /////////////////////////////////
+        System.out.println("\n[Postagem com video]");
+        PostVideo postagem_com_video = new PostVideo();
+        postagem_com_video.adicionaVideo(video);
+        if (!postagem_com_video.posta())
+            throw new Exception(erro_msgs[1]);
+    }
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -570,17 +691,53 @@ public class Main {
         catch (Exception e){
             System.out.println("[X] Nao passou no teste de comentario em video porque: " + e.getMessage());
         }
+        
+        //////////////////////////////////////
+        // TESTE CRIACAO POST FACTORY
+        //////////////////////////////////////
+        System.out.println("");
+        try{
+            Main.testeCriacaoPostFactory();
+            System.out.println("[OK] Passou no teste de criacao de post factory");
+        }
+        catch (Exception e){
+            System.out.println("[X] Nao passou no teste de criacao de post factory porque: " + e.getMessage());
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////// TESTES GERAIS /////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        System.out.println("\n[TESTES GERAIS]");
+        System.out.println("\n");
+        
+        //////////////////////////////////////
+        // TESTE POST FOTO
+        //////////////////////////////////////
+        System.out.println("");
+        try{
+            Main.testePostFoto();
+            System.out.println("[OK] Passou no teste de PostFoto");
+        }
+        catch (Exception e){
+            System.out.println("[X] Nao passou no teste de PostFoto porque: " + e.getMessage());
+        }
+        
+        //////////////////////////////////////
+        // TESTE POST VIDEO
+        //////////////////////////////////////
+        System.out.println("");
+        try{
+            Main.testePostVideo();
+            System.out.println("[OK] Passou no teste de PostVideo");
+        }
+        catch (Exception e){
+            System.out.println("[X] Nao passou no teste de PostVideo porque: " + e.getMessage());
+        }
            
 
 
 
         System.out.println("\n");
-
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////// TESTES GERAIS /////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // System.out.println("\n[TESTES GERAIS]");
-        // System.out.println("\n");
     }
 
 }
