@@ -16,4 +16,8 @@ O trabalho apresentado se baseia no enunciado definido e na imagem em diagrama, 
 
 ## Provocação Teórica
 
-Desenvolvimento explicativo do úlitmo tópico do enunciado.
+* **Singleton de conversão:** Fiquei tentado a implementar, mas pelo tempo apertado decidi não seguir adiante. Foi perceptível na questão da formatação do dia/horário que estava repetindo código na PostFoto e PostVideo, mas para não mudar muito o esquema, decidi seguir adiante. Mas seria a primeira modificação que faria para evoluir esse código. A implementação ocorreria deixando um método para receber um objeto do tipo *DateTimeLocal* e o mesmo retornaria a string formatada.
+
+* **Singleton de feed:** Em termos de implementação, é o que falta para uma rede social. Faria um singleton que teria uma lista de postagens, com suas informações de publicação e seus atributos internos.
+
+* **Postagens temporárias:** Criaria um **Observer** para ficar monitorando as datas iniciadas pelas postagens e o tempo atual do sistema e, dado o tempo definido em um **Singleton de Configuração**, ele avisaria para o *feed*, que iria remover a postagem da lista. Também precisaria de um atributo *boolean* em cada postagem dizendo se ela é ou não temporária.
